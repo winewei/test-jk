@@ -3,11 +3,10 @@ os: linux
 dist: xenial
 
 before_install:
-    - sudo apt-get install pip -y
+    - echo "hello"
 
 install:
     - echo index.html
-    - pip install -r requements.txt
 
 script: false
 
