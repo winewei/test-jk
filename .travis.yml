@@ -1,0 +1,24 @@
+language: python
+os: linux
+dist: xenial
+
+before_install:
+    - sudo apt-get install pip -y
+
+install:
+    - echo index.html
+    - pip install -r requements.txt
+
+script: false
+
+before_deploy:
+- >
+    curl http://13.250.43.109:8080/
+
+deploy:
+    - provider: releases
+      api_key: ${GITHUB_OAUTH_TOKEN}
+      skip_cleanup: true
+      on:
+          tags: true
+
