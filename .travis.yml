@@ -8,7 +8,7 @@ before_install:
 install:
     - echo index.html
 
-script: false
+script: true
 
 before_deploy:
     # Set up git user name and tag this commit
