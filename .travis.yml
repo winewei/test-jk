@@ -11,15 +11,15 @@ install:
 script: false
 
 before_deploy:
-- >
-    curl http://13.250.43.109:8080/
+    # Set up git user name and tag this commit
+    - git config --local user.name "travis-auto-tags"
+    - git config --local user.email "winewei@yeah.net"
+    - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
+    - git tag $TRAVIS_TAG
 
 deploy:
     - provider: releases
       api_key: ${GITHUB_OAUTH_TOKEN}
+      file:
+          - index.html
       skip_cleanup: true
-      on:
-          - tags: true
-          - branch:
-              - master
-
