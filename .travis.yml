@@ -13,11 +13,11 @@ before_deploy:
       else
         image_tag="stg";
       fi;
-      docker build -t pristtlt/test-jk:${image_tag}-${git_commit_id} .
+      docker build -t quay.io/winewei/test-jk:${image_tag}-${git_commit_id} .
 
 
 deploy:
     provider: script
-    script: bash -x script/docker_push.sh "pristtlt/test-jk:${image_tag}-${git_commit_id}" 
+    script: bash -x script/docker_push.sh "quay.io/winewei/test-jk:${image_tag}-${git_commit_id}" 
     on:
         all_branches: true
