@@ -3,12 +3,14 @@ language: python
 service:
     - docker
 install:
- - >
-     echo "TRAVIS_COMMIT: ${TRAVIS_COMMIT}"
-     echo "TRAVIS_REPO_SLUG: ${TRAVIS_REPO_SLUG}"
-     echo "TRAVIS_PULL_REQUEST_SLUG: ${TRAVIS_PULL_REQUEST_SLUG}"
-     docker build -t pristtlt/test-jk .
+    - echo ${TRAVIS_COMMIT}
+    - echo ${TRAVIS_REPO_SLUG}
+    - echo ${TRAVIS_PULL_REQUEST_SLUG}
+    - docker build -t pristtlt/test-jk .
 
+deploy:
+    privider: script
+    script: bash
       #install:
       # - >
       #     tag_commit_hash = "${TRAVIS_COMMIT}"
