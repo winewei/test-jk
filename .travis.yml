@@ -21,4 +21,6 @@ deploy:
     script: 
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       - docker push pristtlt/test-jk:${image_tag}-${git_commit_id}
+    on:
+        all_branches: true
 
