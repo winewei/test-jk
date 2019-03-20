@@ -1,27 +1,23 @@
 language: python
 
+branches:
+    only:
+        - master
+        - /^test.*/
 service:
     - docker
-install:
-    - echo ${TRAVIS_TAG}
-    - echo ${TRAVIS_JOB_NAME}
-    - echo ${TRAVIS_COMMIT}
-    - echo ${TRAVIS_REPO_SLUG}
-    - echo ${TRAVIS_PULL_REQUEST_SLUG}
-    - docker build -t pristtlt/test-jk .
+
+before_deploy:
+  - >
+      git_commit_id=$(git rev-parse --short HEAD)
+      if [ "master" == "${TRAVIS_BRANCH}" ]; then
+        image_tag="prod"
+      else
+        image_tag="stg"
+      fi
+      docker build -t pristtlt/test-jk:${image_tag}-${git_commit_id} .
+
 
 deploy:
     privider: script
-    script: bash
-      #install:
-      # - >
-      #     tag_commit_hash = "${TRAVIS_COMMIT}"
-      #     docker build -t pristtlt/test-jk:"{}" .
-      #deploy:
-      #    provider: script
-      #    script: bash script/docker_push.sh
-      #    on:
-      #        master
-      #     echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-      #
-      #
+    script: bash script/docker_push.sh "pristtlt/test-jk:${image_tag}-${git_commit_id}"
