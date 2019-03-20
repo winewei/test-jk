@@ -7,7 +7,6 @@ service:
 
 before_deploy:
   - >
-      j 
       git_commit_id=$(git rev-parse --short HEAD)
       if [ "master" == "${TRAVIS_BRANCH}" ]; then
         image_tag="prod";
