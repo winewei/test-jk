@@ -18,4 +18,4 @@ before_deploy:
 
 deploy:
     privider: script
-    script: bash script/docker_push.sh "pristtlt/test-jk:${image_tag}-${git_commit_id}"
+    script: bash -x script/docker_push.sh "pristtlt/test-jk:${image_tag}-${git_commit_id}"
