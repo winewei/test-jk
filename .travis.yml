@@ -1,25 +1,23 @@
 language: python
-os: linux
-dist: xenial
 
-before_install:
-    - echo "hello"
-
+service:
+    - docker
 install:
-    - echo index.html
+ - >
+     echo "TRAVIS_COMMIT: ${TRAVIS_COMMIT}"
+     echo "TRAVIS_REPO_SLUG: ${TRAVIS_REPO_SLUG}"
+     echo "TRAVIS_PULL_REQUEST_SLUG: ${TRAVIS_PULL_REQUEST_SLUG}"
+     docker build -t pristtlt/test-jk .
 
-script: true
-
-before_deploy:
-    # Set up git user name and tag this commit
-    - git config --local user.name "travis-auto-tags"
-    - git config --local user.email "winewei@yeah.net"
-    - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
-    - git tag $TRAVIS_TAG
-
-deploy:
-    - provider: releases
-      api_key: ${GITHUB_TOKEN}
-      file:
-          - index.html
-      skip_cleanup: true
+      #install:
+      # - >
+      #     tag_commit_hash = "${TRAVIS_COMMIT}"
+      #     docker build -t pristtlt/test-jk:"{}" .
+      #deploy:
+      #    provider: script
+      #    script: bash script/docker_push.sh
+      #    on:
+      #        master
+      #     echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      #
+      #
