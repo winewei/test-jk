@@ -1,4 +1,4 @@
-language: python
+language: bash
 os: linux
 dist: xenial
 
@@ -7,13 +7,13 @@ service:
 
 before_deploy:
   - >
-      git_commit_id=$(git rev-parse --short HEAD)
-      if [ "master" == "${TRAVIS_BRANCH}" ]; then
-        image_tag="prod"
-      else
-        image_tag="stg"
-      fi
-      docker build -t pristtlt/test-jk:${image_tag}-${git_commit_id} .
+    git_commit_id=$(git rev-parse --short HEAD)
+    if [ "master" == "${TRAVIS_BRANCH}" ]; then
+      image_tag="prod"
+    else
+      image_tag="stg"
+    fi
+    docker build -t pristtlt/test-jk:${image_tag}-${git_commit_id} .
 
 
 deploy:
